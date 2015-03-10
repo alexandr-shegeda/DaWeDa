@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>com.daweda</groupId>
+        <artifactId>daweda</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <repositories>
+        <repository>
+            <id>alexandr-shegeda-snapshots</id>
+            <url>https://raw.github.com/alexandr-shegeda/mavenrepo/master/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>alexandr-shegeda-releases</id>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>https://raw.github.com/alexandr-shegeda/mavenrepo/master/releases</url>
+        </repository>
+    </repositories>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>daweda-services</artifactId>
+    <packaging>bundle</packaging>
+
+    <name>daweda-services</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <version>${felix-bundle-plugin.version}</version>
+                <configuration>
+                    <instructions>
+                        <!--<Bundle-Activator>com.daweda.services.activator.ServiceActivator</Bundle-Activator>-->
+                        <Import-Bundle>
+                            *
+                        </Import-Bundle>
+
+                        <Import-Package>
+                            com.daweda.model.*,
+                            com.daveda.repository.*
+                        </Import-Package>
+                        <Embed-Transitive>false</Embed-Transitive>
+                        <Export-Package>
+                            com.daweda.services.*,
+                            javax.ws.rs.*
+                        </Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-all</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.daweda</groupId>
+            <artifactId>daweda-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.daweda</groupId>
+            <artifactId>daweda-repository</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lightstreamer.client</groupId>
+            <artifactId>ls-client</artifactId>
+            <version>6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>

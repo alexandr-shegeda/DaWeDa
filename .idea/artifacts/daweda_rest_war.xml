@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="daweda-rest:war">
+    <output-path>$PROJECT_DIR$/rest-services/target</output-path>
+    <root id="archive" name="daweda-rest.war">
+      <element id="artifact" artifact-name="daweda-rest:war exploded" />
+    </root>
+  </artifact>
+</component>

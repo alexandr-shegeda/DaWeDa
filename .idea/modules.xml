@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/daweda.iml" filepath="$PROJECT_DIR$/daweda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/daweda-core.iml" filepath="$PROJECT_DIR$/core/daweda-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/daweda-model.iml" filepath="$PROJECT_DIR$/model/daweda-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/repository/daweda-repository.iml" filepath="$PROJECT_DIR$/repository/daweda-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-services/daweda-rest.iml" filepath="$PROJECT_DIR$/rest-services/daweda-rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/daweda-services.iml" filepath="$PROJECT_DIR$/services/daweda-services.iml" />
+    </modules>
+  </component>
+</project>

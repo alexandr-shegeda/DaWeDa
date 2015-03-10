@@ -1,0 +1,23 @@
+<adapters>
+
+    <adapter name="MUTOPIA">
+        <host>10.47.2.129</host>
+        <port>8085</port>
+    </adapter>
+
+    <adapter name="DAWEDA">
+        <host>10.47.2.129</host>
+        <port>8085</port>
+    </adapter>
+
+    <adapter name="COUNTER">
+        <host>10.47.2.129</host>
+        <port>8086</port>
+    </adapter>
+
+    <adapter name="UNITS">
+        <host>10.47.2.129</host>
+        <port>8087</port>
+    </adapter>
+
+</adapters>

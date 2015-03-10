@@ -1,0 +1,11 @@
+package com.daweda.services.lightstreamer;
+
+import com.daweda.services.model.Adapter;
+
+/**
+ * Created by Alexandr_Shegeda on 25.02.2015.
+ */
+public interface ServerUploadService {
+
+    public void pushData(final Adapter instance);
+}

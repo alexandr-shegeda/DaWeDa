@@ -1,0 +1,123 @@
+package com.daweda.services.lightstreamer.Impl;
+
+import com.daweda.services.exception.AdapterNotFoundException;
+import com.daweda.services.lightstreamer.AdapterXMLParser;
+import com.daweda.services.lightstreamer.ServerUploadService;
+import com.daweda.services.model.Adapter;
+
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Service;
+import com.lightstreamer.ls_client.*;
+import java.util.List;
+import java.util.Map;
+
+/*
+ * Created by Alexandr_Shegeda on 23.02.2015.
+ */
+@Service
+@Component(immediate = true)
+public class ServerUploadServiceImpl implements ServerUploadService
+{
+    private Adapter adapter;
+    private AdapterXMLParser parser;
+    private Map<String, List<String>> map;
+
+    public ServerUploadServiceImpl(String adapterName, Map<String, List<String>> map) {
+        this.parser = new AdapterXMLParser();
+        this.map = map;
+        try {
+            this.adapter = parser.getAdapter(adapterName);
+        } catch (AdapterNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void pushData(final Adapter instance) {
+        final LSClient myClient = new LSClient();
+        try {
+            myClient.openConnection(
+                    new ConnectionInfo() {
+                        {
+                            this.pushServerUrl = "http://" + instance.getHost() + ":" + instance.getPort();
+                            this.adapter = instance.getAdapterName();
+                        }
+                    },
+                    new ExtendedConnectionListener() {
+                        private long bytes = 0;
+
+                        public void onConnectionEstablished() {
+                            System.out.println("connection established");
+
+                            try {
+                                myClient.sendMessage("" + map);
+                            } catch (PushConnException e) {
+                                e.printStackTrace();
+                            } catch (PushServerException e) {
+                                e.printStackTrace();
+                            } catch (PushUserException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        public void onSessionStarted(boolean isPolling) {
+                            //never called
+                        }
+
+                        public void onSessionStarted(boolean isPolling, String controlLink) {
+                            String clAddendum = controlLink != null ? " to server " + controlLink : "";
+                            if (isPolling) {
+                                System.out.println("Session started in smart polling" + clAddendum);
+                            } else {
+                                System.out.println("Session started in streaming" + clAddendum);
+                            }
+                        }
+
+                        public void onNewBytes(long newBytes) {
+                            this.bytes += newBytes;
+                        }
+
+                        public void onDataError(PushServerException e) {
+                            System.out.println("data error");
+                            e.printStackTrace();
+                        }
+
+                        public void onActivityWarning(boolean warningOn) {
+                            if (warningOn) {
+                                System.out.println("connection stalled");
+                            } else {
+                                System.out.println("connection no longer stalled");
+                            }
+                        }
+
+                        public void onEnd(int cause) {
+                            System.out.println("connection forcibly closed with cause code " + cause);
+                        }
+
+                        public void onClose() {
+                            System.out.println("total bytes: " + bytes);
+                        }
+
+                        public void onFailure(PushServerException e) {
+                            System.out.println("server failure");
+                            e.printStackTrace();
+                        }
+
+                        public void onFailure(PushConnException e) {
+                            System.out.println("connection failure");
+                            e.printStackTrace();
+                        }
+                    }
+            );
+        } catch (PushConnException e) {
+            e.printStackTrace();
+        } catch (PushServerException e) {
+            e.printStackTrace();
+        } catch (PushUserException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
